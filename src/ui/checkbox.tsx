@@ -1,5 +1,6 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './ui.css';
+import type { AirgapAPI } from 'src/@types/airgap.js';
 
 type Props = {
   purpose: {
@@ -8,26 +9,32 @@ type Props = {
     defaultConsent: string | boolean;
     key: string;
   };
-  airgap: any;
+  airgap: AirgapAPI;
+  reset: boolean;
 };
 
-function Checkbox({ purpose, airgap }: Props) {
-  const [checked, setChecked] = useState(true);
+function Checkbox({ purpose, airgap, reset }: Props) {
+  const [checked, setChecked] = useState(
+    airgap.getConsent().purposes[purpose.key],
+  );
 
-  const checkbox = document.getElementById(purpose.key);
-  checkbox?.addEventListener('click', (interaction) => {
-    airgap.setConsent(interaction, purpose.key)
-  });
+  useEffect(() => {
+    setChecked(airgap.getConsent().purposes[purpose.key]);
+  }, [reset]);
 
-  console.log(airgap.getConsent().purposes)
-  
   return (
-    <div className="flex" style={{ alignItems: 'flex-start' }}>
-      <input type="checkbox" checked={checked} id={purpose.key} onChange={() => {
-        setChecked(!checked)
-        }} />
-      <div style={{ paddingLeft: '10px' }}>
-        <h4 style={{ margin: 0 }}>{purpose.name}</h4>
+    <div className="flex checkbox">
+      <input
+        type="checkbox"
+        checked={checked}
+        id={purpose.key}
+        onChange={(e) => {
+          airgap.setConsent(e.nativeEvent, { [purpose.key]: !checked });
+          setChecked(!checked);
+        }}
+      />
+      <div className='purpose'>
+        <h4 className='purpose-name'>{purpose.name}</h4>
         <p>{purpose.description}</p>
       </div>
     </div>

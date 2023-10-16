@@ -7,11 +7,11 @@ const App: React.FC = () => {
     <div className="App">
       <header className="App-header">
         <button
-          className = "consent-manager-button"
-          onClick = {(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+          className="consent-manager-button"
+          onClick={() => {
             window?.transcend?.ready?.((transcend: TranscendAPI) =>
-              transcend.showConsentManager()
-            )
+              transcend.showConsentManager(),
+            );
           }}
         >
           Data Collection Preferences

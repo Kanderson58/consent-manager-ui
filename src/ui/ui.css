@@ -7,12 +7,14 @@
   position: absolute;
   z-index: 1000000;
   padding: 0 2%;
+  font-family: Cambria, sans-serif;
 }
 
 button {
   border: none;
   background: white;
   cursor: pointer;
+  font-family: Cambria, sans-serif;
 }
 
 footer, header {
@@ -24,8 +26,33 @@ footer, header {
 }
 
 .footer-btn {
-  border: solid black 1px;
   border-radius: 5px;
-  padding: 5px;
-  margin-bottom: 15px;
+  padding: 10px 15px;
+  margin: 15px 0 20px;
+  font-size: 12pt;
+  background-color: rgb(195, 195, 195);
+}
+
+.footer-btn:hover {
+  background-color: rgb(220, 220, 220);
+}
+
+.hide {
+  display: none;
+}
+
+.checkbox {
+  align-items: flex-start
+}
+
+.purpose {
+  padding-left: 10px;
+}
+
+.purpose-name {
+  margin: 0;
+}
+
+.deny-all {
+  margin-left: 15px;
 }
