@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { getAirgap } from './init';
 import './ui.css';
-import Checkbox from './checkbox';
+import CheckboxContainer from './checkbox';
+import svg from './privacy-choices-icon.svg';
+import { Button } from '@mui/material';
+
 let root: Element | undefined;
 
 let initialized = false;
@@ -19,6 +22,7 @@ const setupConsentManagerUI = async (): Promise<void> => {
     const [showBanner, setShowBanner] = useState(false);
 
     useEffect(() => {
+      // allows rerender on open/close
       setShowBanner(initialized);
     }, [initialized]);
 
@@ -26,6 +30,7 @@ const setupConsentManagerUI = async (): Promise<void> => {
       purposesData.forEach((purpose) =>
         airgap.setConsent(e.nativeEvent, { [purpose.key]: true }),
       );
+      // allows rerender on accept or deny all
       setAcceptOrDeny(!acceptOrDeny);
     };
 
@@ -33,6 +38,7 @@ const setupConsentManagerUI = async (): Promise<void> => {
       purposesData.forEach((purpose) =>
         airgap.setConsent(e.nativeEvent, { [purpose.key]: false }),
       );
+      // allows rerender on accept or deny all
       setAcceptOrDeny(!acceptOrDeny);
     };
 
@@ -44,35 +50,63 @@ const setupConsentManagerUI = async (): Promise<void> => {
     return (
       <div className={`${!showBanner && 'hide'}`}>
         <header className="flex">
-          <h2>Consent Manager</h2>
-          <button className="consent-manager-button" onClick={finish}>
+          <button className="consent-manager-button close" onClick={finish}>
             X
           </button>
         </header>
-        <h3>Please select all data tracking that you consent to:</h3>
+        <span className="flex title">
+          <img src={svg} alt="Data control icon" />
+          <h2>You control your data.</h2>
+        </span>
+        <p>Example Company products are designed to protect your privacy.</p>
+        <p>
+          We won't collect data about you for advertising, analytics, or other
+          non-essential things unless you give us permission to.
+        </p>
+        <p>
+          You can change your preferences at any time from this window or from
+          our Privacy Center.
+        </p>
         {purposesData.map((purpose) => (
-          <Checkbox
+          <CheckboxContainer
             key={purpose.name}
             purpose={purpose}
             airgap={airgap}
             reset={acceptOrDeny}
           />
         ))}
+        <p>We also collect information for the following purposes:</p>
+        <ul>
+          <li>
+            <span className="bold">Government-required data collection:</span>{' '}
+            We share relevant information with [government agency here] as
+            pursuant to [jurisdiction] law.
+          </li>
+          <li>
+            <span className="bold">Cursor Tracking:</span> We share your cursor
+            movement with an NGO dedicated to curing Parkinson's Disease.
+          </li>
+        </ul>
         <footer className="flex">
           <div>
-            <button className="footer-btn" onClick={handleAcceptAll}>
+            <Button variant="outlined" onClick={handleAcceptAll}>
               Accept All
-            </button>
-            <button
-              className="footer-btn deny-all"
+            </Button>
+            <Button
+              variant="outlined"
+              sx={{ marginLeft: 2 }}
               onClick={handleDenyAll}
             >
               Deny All
-            </button>
+            </Button>
           </div>
-          <button className="footer-btn" onClick={finish}>
-            Finish
-          </button>
+          <Button
+            variant="contained"
+            onClick={finish}
+            sx={{ backgroundColor: '#0065ff' }}
+          >
+            Save Preferences
+          </Button>
         </footer>
       </div>
     );

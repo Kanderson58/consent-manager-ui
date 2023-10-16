@@ -1,58 +1,75 @@
 .ConsentManager {
   width: 50vw;
-  height: fit-content;
+  max-height: 80vh;
   background: white;
   overflow: auto;
-  margin: 10% 25% 0 25%;
+  margin: 5% 25% 0 25%;
   position: absolute;
   z-index: 1000000;
   padding: 0 2%;
-  font-family: Cambria, sans-serif;
+  font-family: Helvetica, sans-serif;
+  font-weight: 500;
 }
 
 button {
   border: none;
   background: white;
   cursor: pointer;
-  font-family: Cambria, sans-serif;
+  font-family: Helvetica, sans-serif;
 }
 
-footer, header {
+header {
+  justify-content: flex-end;
+}
+
+footer {
   justify-content: space-between;
+  margin: 15px 0;
+}
+
+img {
+  height: 40px;
+  width: 100px;
+  margin-right: 15px;
+  margin-left: -10px;
 }
 
 .flex {
   display: flex;
 }
 
-.footer-btn {
-  border-radius: 5px;
-  padding: 10px 15px;
-  margin: 15px 0 20px;
-  font-size: 12pt;
-  background-color: rgb(195, 195, 195);
-}
-
-.footer-btn:hover {
-  background-color: rgb(220, 220, 220);
-}
-
 .hide {
   display: none;
 }
 
+.close {
+  margin: 20px 0 -35px;
+}
+
 .checkbox {
-  align-items: flex-start
+  align-items: flex-start;
 }
 
 .purpose {
-  padding-left: 10px;
+  padding: 2px 15px 15px;
+  width: 100%;
 }
 
 .purpose-name {
   margin: 0;
 }
 
-.deny-all {
-  margin-left: 15px;
+.description {
+  width: 90%;
+  border-radius: 5px;
+  padding: 15px;
+  background-color: rgba(225, 225, 225, 0.375);
+}
+
+.title {
+  align-items: center;
+}
+
+.bold {
+  font-weight: 600;
 }
